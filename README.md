@@ -14,14 +14,18 @@ This is a [Docker](https://www.docker.com/) image for [Keybase client](https://k
 
 ```
 # where the KBFS is mounted inside the container.
-# If you change this, you have to change it in the Dockerfile as well and rebuild the image
-KEYBASE_KBFS_MOUNT=/home/keybase/kbfs
+KEYBASE_KBFS_MOUNT=/kbfs
 
+# the UID of the user who will run the container.
+UID=1000
 KEYBASE_USER=your_keybase_user
 KEYBASE_PAPERKEY=your keybase paper key
 ```
 
-After that, you can run `docker-compose up -d`. It uses the prebuilt image at [the Docker hub](https://hub.docker.com/r/waldner/keybase/). The KBFS is mounted at `${KEYBASE_KBFS_MOUNT}` (`/home/keybase/kbfs`) inside the container.
+The UID variable is used by the entrypoint script to do some trickery to match the UID of the user unnig docker with the UID of the user inside the container. In most cases you don't need to change this, but it may happen that your user has an ID that is not 1000, so you'll have to change that value in the `.env` file.
+
+After that, you can run `docker-compose up -d`. It uses the prebuilt image at [the Docker hub](https://hub.docker.com/r/waldner/keybase/). The KBFS is mounted at `${KEYBASE_KBFS_MOUNT}` (`/kbfs`) inside the container.
+
 
 ### How to get the KBFS mount on the host
 
@@ -35,7 +39,6 @@ services:
     volumes:
       - "/home/you/kbfs:${KEYBASE_KBFS_MOUNT}:shared"
 ```
-**NOTE: you have to create `/home/you/kbfs` on the host beforehand with your user's permissions, otherwise docker will create it with root ownership which, in turn, will make the KBFS mount in the container fail.**
 
 With this you'll have the KBFS exposed at `/home/you/kbfs` on the host.
 
