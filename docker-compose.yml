@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  keybase:
+    image: waldner/keybase:1 
+    container_name: keybase
+    restart: always
+
+    cap_add:
+      - SYS_ADMIN
+
+    devices:
+      - "/dev/fuse:/dev/fuse"
+
+    security_opt:
+      - "apparmor:unconfined"
+
+    environment:
+      - KEYBASE_ALLOW_ROOT=1
+      - KEYBASE_USER=${KEYBASE_USER}
+      - KEYBASE_PAPERKEY=${KEYBASE_PAPERKEY}
+      - KEYBASE_KBFS_MOUNT=${KEYBASE_KBFS_MOUNT}
+      - UID=${UID}
+

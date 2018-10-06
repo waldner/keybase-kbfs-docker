@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  keybase:
+    volumes:
+      - "${KEYBASE_HOST_KBFS_MOUNT}:${KEYBASE_KBFS_MOUNT}:shared"
+
