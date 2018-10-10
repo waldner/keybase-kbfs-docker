@@ -18,6 +18,10 @@ KEYBASE_KBFS_MOUNT=/kbfs
 
 # the UID of the user who will run the container.
 UID=1000
+
+# to have container's time in sync with the host
+TZ=your/timezone
+
 KEYBASE_USER=your_keybase_user
 KEYBASE_PAPERKEY=your keybase paper key
 ```
