@@ -2,7 +2,7 @@ version: '3'
 
 services:
   keybase:
-    image: waldner/keybase:1 
+    image: waldner/keybase:2 
     container_name: keybase
     restart: always
 
