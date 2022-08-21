@@ -2,12 +2,14 @@ version: '3'
 
 services:
   keybase:
-    image: waldner/keybase:2 
+    image: waldner/keybase:4
     container_name: keybase
     restart: always
 
     cap_add:
       - SYS_ADMIN
+
+    privileged: true
 
     devices:
       - "/dev/fuse:/dev/fuse"

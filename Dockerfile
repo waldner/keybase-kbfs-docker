@@ -1,12 +1,14 @@
-FROM debian:10-slim
+FROM debian:11-slim
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      perl-modules-5.28 \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+      perl-modules \
       apt-utils \
       gosu \
       curl && \
     curl -s -O https://prerelease.keybase.io/keybase_amd64.deb && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y ./keybase_amd64.deb && \
+    apt-get install -y ./keybase_amd64.deb && \
     rm keybase_amd64.deb && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/cache/*
