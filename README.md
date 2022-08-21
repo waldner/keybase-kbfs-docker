@@ -48,5 +48,13 @@ With this you'll have the KBFS exposed at `/home/you/kbfs` on the host.
 
 ### Caveats
 
-To use a FUSE mount inside the container, the device `/dev/fuse` is exposed to the container, which also needs to have the `SYS_ADMIN` capability (and needs the `apparmor:unconfined` security option under Ubuntu). If you're exporting the KBFS mount back to the host and the container crashes without cleaning up, you might have to manually umount (ie `fusermount -u /home/you/kbfs`) the host mount point.
+- To use a FUSE mount inside the container, the device `/dev/fuse` is exposed to the container, which also needs to have the `SYS_ADMIN` capability (and needs the `apparmor:unconfined` security option under Ubuntu). If you're exporting the KBFS mount back to the host and the container crashes without cleaning up, you might have to manually umount (ie `fusermount -u /home/you/kbfs`) the host mount point.
 
+- If you try to do `ls /kbfs/private` you get the mostly unrelated error `ls: reading directory '/kbfs/private/': Input/output error`. This sort of makes sense, as the contents of that directory are, well, private, although the error message is highly misleading and might look like a genuine error (network or whatever). Turns out that inside `private/`, you can only access your own subdirectory, so you always have to specify at least that path (plus any further subpath you might want):
+
+```
+# this works, assuming your username is "fonzie":
+$ ls /kbfs/private/fonzie     # or /kbfs/private/fonzie/whatever
+```
+
+Furthermore, remember that the kbfs mount must always be accessed with the user with UID 1000, both inside and outside the container (inside the container it's the user `keybase`, which you can su in to from root).
