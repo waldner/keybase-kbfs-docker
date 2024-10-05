@@ -1,6 +1,6 @@
 services:
   keybase:
-    image: waldner/keybase:5
+    image: ghcr.io/waldner/keybase-kbfs-docker:1
     container_name: keybase
     restart: always
 

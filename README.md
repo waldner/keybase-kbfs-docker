@@ -36,8 +36,6 @@ After that, you can run `docker-compose up -d`. It uses the prebuilt image at [t
 Create a file `docker-compose.override.yml` with the follwing contents:
 
 ```
-version: '3'
-
 services:
   keybase:
     volumes:
